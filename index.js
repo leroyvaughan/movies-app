@@ -17,11 +17,9 @@ app.use(bodyParser.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 
-app.get('/', (req, res) => {
-    res.send('Hello Worlds!');
-
-    // res.sendFile(path.join(__dirname + '/client/public/index.html'));
-})
+// app.get('/', (req, res) => {
+//     res.send('Hello Worlds!');
+// })
 
 
 app.use('/api', movieRouter)
@@ -34,15 +32,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/public/index.html'));
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
-
-
-
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
-
 
 
 // start server on the specified port, binding host
