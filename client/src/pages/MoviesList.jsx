@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ReactTable from 'react-table'
-import api from '../api'
 
 import styled from 'styled-components'
 
@@ -25,7 +24,7 @@ class UpdateMovie extends Component {
     updateUser = event => {
         event.preventDefault()
 
-        window.location.href = `/movies/update/${this.props.id}`
+        window.location.href = `/movies/update/${this.props.id}`;
     }
 
     render() {
@@ -37,14 +36,13 @@ class DeleteMovie extends Component {
     deleteUser = event => {
         event.preventDefault()
 
-        if (
-            window.confirm(
-                `Do tou want to delete the movie ${this.props.id} permanently?`,
-            )
-        ) {
-            api.deleteMovieById(this.props.id)
-            window.location.reload()
-        }
+        fetch('/api/movie/' + this.props.id, {
+            method: 'DELETE'
+        })
+            .then(() => {
+                window.location.reload();
+            });
+
     }
 
     render() {
@@ -70,12 +68,13 @@ class MoviesList extends Component {
     componentDidMount = async () => {
         this.setState({ isLoading: true })
 
-        await api.getAllMovies().then(movies => {
-            this.setState({
-                movies: movies.data.data,
-                isLoading: false,
-            })
-        })
+        let response = await fetch('/api/movies');
+        let data = await response.json();
+
+        this.setState({
+            movies: data.data,
+            isLoading: false,
+        });
     }
 
     render() {
@@ -106,7 +105,7 @@ class MoviesList extends Component {
             {
                 Header: '',
                 accessor: '',
-                Cell: function(props) {
+                Cell: function (props) {
                     return (
                         <span>
                             <DeleteMovie id={props.original._id} />
@@ -117,7 +116,7 @@ class MoviesList extends Component {
             {
                 Header: '',
                 accessor: '',
-                Cell: function(props) {
+                Cell: function (props) {
                     return (
                         <span>
                             <UpdateMovie id={props.original._id} />

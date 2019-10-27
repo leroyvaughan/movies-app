@@ -1,10 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const path = require('path')
 require('dotenv').config();
 
-const db = require('./db')
-const movieRouter = require('./routes/movie-router')
+const db = require('./server/db')
+const movieRouter = require('./server/routes/movie-router')
 
 const app = express()
 const apiPort = process.env.PORT
@@ -17,14 +18,27 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 
 app.get('/', (req, res) => {
-    res.send('Hello Worlds!')
+    res.send('Hello Worlds!');
+
+    // res.sendFile(path.join(__dirname + '/client/public/index.html'));
 })
 
 
 app.use('/api', movieRouter)
 
 
-// app.use(express.static(path.join(__dirname, 'build')));
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/public/index.html'));
+});
+
+
+
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 // });

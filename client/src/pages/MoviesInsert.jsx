@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import api from '../api'
 
 import styled from 'styled-components'
 
@@ -69,14 +68,30 @@ class MoviesInsert extends Component {
         const arrayTime = time.split('/')
         const payload = { name, rating, time: arrayTime }
 
-        await api.insertMovie(payload).then(res => {
-            window.alert(`Movie inserted successfully`)
-            this.setState({
-                name: '',
-                rating: '',
-                time: '',
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        await fetch("/api/movie/", options)
+            .then(() => {
+                this.setState({
+                    name: '',
+                    rating: '',
+                    time: '',
+                });
             })
-        })
+            .then(() => {
+                document.location.href = "/movies/list";
+            })
+            .catch((err) => {
+                //TODO
+                console.log("error in updateMovie: " + err);
+            });
     }
 
     render() {

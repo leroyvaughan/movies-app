@@ -112,7 +112,11 @@ getMovies = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Movie not found` })
         }
-        return res.status(200).json({ success: true, data: movies })
+
+        return res.status(200).json({
+            success: true,
+            data: movies
+        })
     }).catch(err => console.log(err))
 }
 

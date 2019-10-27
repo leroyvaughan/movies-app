@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import api from '../api'
 
 import styled from 'styled-components'
 
@@ -70,32 +69,49 @@ class MoviesUpdate extends Component {
         const arrayTime = time.split('/')
         const payload = { name, rating, time: arrayTime }
 
-        await api.updateMovieById(id, payload).then(res => {
-            window.alert(`Movie updated successfully`)
-            this.setState({
-                name: '',
-                rating: '',
-                time: '',
+        const options = {
+            method: 'PUT',
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        await fetch('/api/movie/' + id, options)
+            .then(() => {
+                this.setState({
+                    name: '',
+                    rating: '',
+                    time: '',
+                });
             })
-        })
+            .then(() => {
+                document.location.href = "/movies/list";
+            })
+            .catch((err) => {
+                //TODO
+                console.log("error in updateMovie: " + err);
+            });
     }
 
     componentDidMount = async () => {
         const { id } = this.state
-        const movie = await api.getMovieById(id)
+
+        let response = await fetch("/api/movie/" + id);
+        let movie = await response.json();
 
         this.setState({
-            name: movie.data.data.name,
-            rating: movie.data.data.rating,
-            time: movie.data.data.time.join('/'),
-        })
+            name: movie.data.name,
+            rating: movie.data.rating,
+            time: movie.data.time.join('/'),
+        });
     }
 
     render() {
         const { name, rating, time } = this.state
         return (
             <Wrapper>
-                <Title>Create Movie</Title>
+                <Title>Update Movie</Title>
 
                 <Label>Name: </Label>
                 <InputText
