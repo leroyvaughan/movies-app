@@ -8,7 +8,7 @@ const db = require('./server/db')
 const movieRouter = require('./server/routes/movie-router')
 
 const app = express()
-const apiPort = process.env.PORT
+const apiPort = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
