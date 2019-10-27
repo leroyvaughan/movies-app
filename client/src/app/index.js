@@ -1,5 +1,6 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import React from 'react';
+import { Redirect } from 'react-router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { NavBar } from '../components'
 import { MoviesList } from '../pages'
@@ -20,6 +21,7 @@ function App() {
                     exact
                     component={MoviesUpdate}
                 />
+                <Redirect exact from="/" to="/movies/list" />
             </Switch>
         </Router>
     )

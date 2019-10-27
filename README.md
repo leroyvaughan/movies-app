@@ -15,7 +15,14 @@ into package.json, in the /client (React) folder.
 I had to do some things like move index.js out of the server folder, and obsolete the Axios module out of React in order to proxy.
 *There is still an index file in /client/api folder, but it isn't being used.
 
-If I decide to keep this up on the web as a live running app, I'll post the link.  Otherwise, if you don't see a link, look for another
-ReactJs app that will have more Front End in it.
+**The code isn't my usual standard as I copy pasted most of it as I followed through in the medium article. I usually use statement
+terminators (semicolon's) at the end of each line, but his code didn't have those.  Tomato, tomahto...
+
+...maybe I'll add a lint rule later on.
+
+
+Here's the running app online:
+https://sleepy-thicket-11929.herokuapp.com/
+
 
 Thanks for checking me out!!!

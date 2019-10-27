@@ -82,11 +82,11 @@ class MoviesList extends Component {
         console.log('TCL: MoviesList -> render -> movies', movies)
 
         const columns = [
-            {
-                Header: 'ID',
-                accessor: '_id',
-                filterable: true,
-            },
+            // {
+            //     Header: 'ID',
+            //     accessor: '_id',
+            //     filterable: true,
+            // },
             {
                 Header: 'Name',
                 accessor: 'name',
